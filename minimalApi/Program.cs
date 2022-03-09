@@ -6,12 +6,16 @@ using MySqlConnector;
 using System.Data.Common;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.Configure<AppSettings>(builder.Configuration);
+var appsettings = builder.Configuration.Get<AppSettings>();
+
+builder.Services.AddSingleton(appsettings);
 
 builder.Services.AddSingleton<DbProviderFactory>(MySqlConnectorFactory.Instance);
 
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddSingleton<DapperContext>();
 
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
@@ -52,6 +56,6 @@ app.UseAuthorization();
 
 
 app.AddLoginEndpoint(builder);
-app.AddGetAllFxRatesEndpoint(builder);
+app.AddGetAllFxRatesEndpoint();
 
 app.Run();
