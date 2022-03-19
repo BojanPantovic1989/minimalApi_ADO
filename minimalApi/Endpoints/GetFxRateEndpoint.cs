@@ -21,9 +21,7 @@ public static class GetFxRateEndpoint
 
             using var cmd = CreateReadCommand(db);
 
-            var result = ReadResult(cmd);
-            await response.WriteAsJsonAsync(result);
-            return;
+            return ReadResult(cmd);
         })
         .Produces(StatusCodes.Status200OK);
     }    
