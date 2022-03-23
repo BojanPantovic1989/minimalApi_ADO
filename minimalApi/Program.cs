@@ -1,12 +1,12 @@
 using minimalApi.Configuration;
 using minimalApi.Endpoints;
-using MySqlConnector;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<AppSettings>(builder.Configuration);
 var appSettings = builder.Configuration.Get<AppSettings>();
-//builder.Services.AddSingleton<DbProviderFactory>(MySqlConnectorFactory.Instance);
-builder.Services.AddTransient<MySqlConnection>(_ => new MySqlConnection(appSettings.ConnectionString));
+
+
+builder.Services.AddTransient<SqlConnection>(_ => new SqlConnection(appSettings.ConnectionString));
 
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IUserService, UserService>();

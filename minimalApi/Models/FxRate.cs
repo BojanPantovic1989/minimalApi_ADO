@@ -2,8 +2,7 @@
 
 namespace minimalApi.Models;
 
-[Keyless]
-[Table("v_currencies")]
+[Table("currencies")]
 public class FxRate
 {
     [Column("currency_code")]
